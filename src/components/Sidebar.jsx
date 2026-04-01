@@ -3,6 +3,7 @@ import {
   LayoutDashboard,
   ArrowLeftRight,
   Lightbulb,
+  Info,
   Moon,
   Sun,
 } from 'lucide-react';
@@ -13,6 +14,7 @@ const NAV = [
   { id: 'dashboard', label: 'Overview', icon: LayoutDashboard },
   { id: 'transactions', label: 'Transactions', icon: ArrowLeftRight },
   { id: 'insights', label: 'Insights', icon: Lightbulb },
+  { id: 'about', label: 'About', icon: Info },
 ];
 
 export default function Sidebar() {

@@ -4,6 +4,8 @@ import Sidebar from './components/Sidebar';
 import Dashboard from './components/Dashboard';
 import Transactions from './components/Transactions';
 import Insights from './components/Insights';
+import About from './components/About';
+import SiteFooter from './components/SiteFooter';
 import TransactionModal from './components/TransactionModal';
 import ConfirmDialog from './components/ConfirmDialog';
 import ToastStack from './components/ToastStack';
@@ -23,6 +25,7 @@ function AppShell() {
     dashboard: Dashboard,
     transactions: Transactions,
     insights: Insights,
+    about: About,
   }[activeTab] || Dashboard;
 
   return (
@@ -33,7 +36,10 @@ function AppShell() {
           <div className="mobile-role-bar">
             <RoleSelect variant="bar" />
           </div>
-          <Page key={activeTab} />
+          <div className="main-inner">
+            <Page key={activeTab} />
+          </div>
+          <SiteFooter />
         </main>
       </div>
       <Fab />

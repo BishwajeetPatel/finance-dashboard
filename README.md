@@ -1,83 +1,78 @@
- FinBoard
+# FinBoard
 
-Finance dashboard I built for a frontend assignment. React and Vite, mock data only — nothing hits a server. I was trying to get to something that feels like a real product: layout you can read, flows that make sense, and state you can follow without digging through ten libraries.
+**Author:** Bishwajeet Patel
+
+This project was built as part of a frontend assignment to demonstrate dashboard design, state management, and UI/UX skills. It is my own work: React + Vite, mock data only — nothing hits a server. The UI is meant to feel like a small real product: readable layout, sensible flows, and state you can follow without extra libraries.
 
 ---
 
-Run it
+## Run it
 
-Need Node 18 or newer.
+Requires Node 18 or newer.
 
-//bash
+```bash
 git clone <your-repo-url>
 cd finance-dashboard
 npm install
 npm run dev
 ```
 
-Then open whatever URL Vite shows (often localhost:5173).
+Then open the URL Vite prints (often `http://localhost:5173`).
 
 Production build:
 
- bash
+```bash
 npm run build
 npm run preview
+```
 
-
-`dist/` is what you ship; any static host works.
-
-
-
- What it does
-
-Overview Cards for balance, income, expenses, and savings rate; a balance-over-time chart; spending by category; last few transactions.
-
-Transactions — Search, filter by type and category, sort by date or amount, export what’s on screen to CSV. Two roles: Viewer is read-only; Admin can add, edit, or delete (there’s a floating add button and a confirm before delete).
-
-Insights — Top category this month, rough month-over-month change, savings rate, plus a short blurb computed from the same transaction list.
-
-Elsewhere — Light/dark theme (sidebar follows), toasts when you add or remove something, a brief skeleton on first load, empty states when filters or data dry up. Layout is responsive: wide sidebar on desktop, bottom nav when the screen gets small.
+Ship the `dist/` folder to any static host.
 
 ---
 
- How it’s built
+## What it does
 
-State lives in one React context with a reducer — transactions, filters, role, theme, modals, toasts. I liked that for a small app because you can scan one file and see what’s possible, instead of tracing props everywhere.
+- **Overview** — Cards for balance, income, expenses, and savings rate; balance-over-time chart; spending by category; recent transactions.
+- **Transactions** — Search, filter by type and category, sort by date or amount, export the visible rows to CSV. **Roles:** Viewer is read-only; Admin can add, edit, or delete (floating add button + confirm before delete).
+- **Insights** — Top category, month-over-month change, savings rate, short copy derived from the same data.
+- **About** — Project purpose, author, and assignment context.
 
-Data starts from `src/data/mockData.js`. If you’ve never used the app before, that seed fills the UI. After that, the browser keeps your copy under localStorage key `finboard:v1` (transactions, role, theme). Wipe site data if you want a clean slate.
+Elsewhere — light/dark theme, toasts on add/delete, skeleton on first load, empty states, responsive layout (sidebar on desktop, bottom nav on small screens).
 
-Styling is normal CSS with variables for light and dark. Charts are Recharts; icons are Lucide. No Tailwind, no UI kit — mostly so the file tree stays obvious.
+---
 
+## How it’s built
 
+State lives in one React context with a reducer (transactions, filters, role, theme, modals, toasts). Data starts from `src/data/mockData.js`; the browser persists your copy under localStorage key `finboard:v1` (transactions, role, theme). Clear site data for a clean slate.
 
-Folders (short)
+Styling uses CSS variables for light/dark. Charts: Recharts. Icons: Lucide.
 
-`src/components` — screens and UI pieces  
-`src/context` — `AppContext` + reducer  
-`src/data` — seed transactions  
-`src/utils` — formatting, insight helpers, CSV, filtering  
+**Folders**
 
-Entry is `main.jsx`; shell and styles are `App.jsx` / `App.css`.
+- `src/components` — screens and UI
+- `src/context` — `AppContext` + reducer
+- `src/data` — seed transactions
+- `src/utils` — formatting, insights, CSV, filtering
 
+Entry: `main.jsx`. Shell: `App.jsx` / `App.css`.
 
+---
 
-Roles
+## Roles
 
-Viewer — look, don’t touch.  
-Admin — CRUD on transactions.
+- **Viewer** — read-only: browse, filter, and export.
+- **Admin** — add, edit, and delete transactions.
 
-That’s enforced in the UI only. There’s no login; it’s there so whoever grades it can flip between modes in a click.
+Enforced in the UI only (no login).
 
+---
 
+## Note
 
-Heads-up
+All numbers are mock. Nothing here is financial advice.
 
-All numbers are fake. Anything that sounds like advice is just the app reading your mock list back to you.
+---
 
-Main point of the repo for me: show clear structure and a usable UI, not stack complexity for its own sake.
+## License
 
-
-
- #License
-
-Private / portfolio unless you say otherwise.
+Private / portfolio unless you specify otherwise.
