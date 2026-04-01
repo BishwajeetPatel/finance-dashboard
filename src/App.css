@@ -204,6 +204,7 @@ a { text-decoration: none; }
   font-size: 13.5px; font-weight: 600; transition: all var(--transition);
 }
 .btn-primary:hover { background: #4f46e5; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(99,102,241,0.35); }
+.btn-primary:active { transform: translateY(0); box-shadow: none; }
 
 .btn-secondary {
   display: flex; align-items: center; gap: 6px;
@@ -213,6 +214,7 @@ a { text-decoration: none; }
   transition: all var(--transition);
 }
 .btn-secondary:hover { background: var(--border); }
+.btn-secondary:active { transform: translateY(0); }
 
 .btn-outline {
   display: flex; align-items: center; gap: 6px;
@@ -222,6 +224,7 @@ a { text-decoration: none; }
   transition: all var(--transition);
 }
 .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+.btn-outline:active { transform: translateY(0); }
 
 /* ─── Summary Cards ─────────────────────────────────────────── */
 .cards-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
@@ -409,6 +412,21 @@ a { text-decoration: none; }
 .tx-table th.sortable { cursor: pointer; user-select: none; }
 .tx-table th.sortable:hover { color: var(--text); }
 .app-root.dark .tx-table th.sortable:hover { color: #f8fafc; }
+.th-sort-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+.th-sort-btn.right { justify-content: flex-end; width: 100%; }
+.th-sort-btn:focus-visible {
+  outline: 2px solid var(--accent2);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
 
 .sort-icon { display: inline; vertical-align: middle; margin-left: 4px; opacity: 0.4; }
 .sort-icon.active { opacity: 1; color: var(--accent); }
@@ -445,6 +463,11 @@ a { text-decoration: none; }
 .icon-btn {
   padding: 5px 7px; border-radius: 6px; transition: all var(--transition);
   display: inline-flex; margin-left: 4px;
+}
+.icon-btn:active { transform: scale(0.98); }
+.icon-btn:focus-visible {
+  outline: 2px solid var(--accent2);
+  outline-offset: 2px;
 }
 .icon-btn.edit { color: var(--text2); }
 .icon-btn.edit:hover { background: #eef2ff; color: var(--accent); }
@@ -719,6 +742,27 @@ a { text-decoration: none; }
   background-size: 200% 100%;
   animation: shimmer 1.2s ease-in-out infinite;
   border-radius: 8px;
+}
+.skeleton-card,
+.skeleton-chart,
+.skeleton-bar,
+.skeleton-row .skeleton-cell {
+  position: relative;
+  overflow: hidden;
+}
+.skeleton-card::after,
+.skeleton-chart::after,
+.skeleton-bar::after,
+.skeleton-row .skeleton-cell::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.28), transparent);
+  animation: shimmerSweep 1.4s ease-in-out infinite;
+}
+@keyframes shimmerSweep {
+  to { transform: translateX(100%); }
 }
 @keyframes shimmer {
   0% { background-position: 200% 0; }

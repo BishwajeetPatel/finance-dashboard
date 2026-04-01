@@ -27,8 +27,13 @@ export default function Transactions() {
     if (filters.sortBy === field) {
       setFilter({ sortDir: filters.sortDir === 'asc' ? 'desc' : 'asc' });
     } else {
-      setFilter({ sortBy: field, sortDir: field === 'date' ? 'desc' : 'desc' });
+      setFilter({ sortBy: field, sortDir: 'desc' });
     }
+  }
+
+  function ariaSortFor(field) {
+    if (filters.sortBy !== field) return 'none';
+    return filters.sortDir === 'asc' ? 'ascending' : 'descending';
   }
 
   function exportCsv() {
@@ -55,7 +60,12 @@ export default function Transactions() {
           <p className="page-sub">Search, filter, and review all activity.</p>
         </div>
         <div className="header-actions">
-          <button type="button" className="btn-secondary" onClick={exportCsv}>
+          <button
+            type="button"
+            className="btn-secondary"
+            onClick={exportCsv}
+            aria-label="Export visible transactions as CSV"
+          >
             <Download size={16} />
             Export CSV
           </button>
@@ -105,25 +115,28 @@ export default function Transactions() {
       <div className="table-wrap">
         {list.length === 0 ? (
           <EmptyState
-            title="No matching transactions"
-            description="Clear filters or try another search to see results."
+            title="No transactions match your filters"
+            description="Try removing a filter or changing your search."
           />
         ) : (
           <table className="tx-table">
             <thead>
               <tr>
-                <th
-                  className="sortable"
-                  scope="col"
-                  onClick={() => toggleSort('date')}
-                >
-                  Date
-                  <ArrowUpDown
-                    size={12}
-                    className={`sort-icon ${
-                      filters.sortBy === 'date' ? 'active' : ''
-                    }`}
-                  />
+                <th className="sortable" scope="col" aria-sort={ariaSortFor('date')}>
+                  <button
+                    type="button"
+                    className="th-sort-btn"
+                    onClick={() => toggleSort('date')}
+                    aria-label="Sort transactions by date"
+                  >
+                    Date
+                    <ArrowUpDown
+                      size={12}
+                      className={`sort-icon ${
+                        filters.sortBy === 'date' ? 'active' : ''
+                      }`}
+                    />
+                  </button>
                 </th>
                 <th scope="col">Description</th>
                 <th scope="col">Category</th>
@@ -131,15 +144,22 @@ export default function Transactions() {
                 <th
                   className="right sortable"
                   scope="col"
-                  onClick={() => toggleSort('amount')}
+                  aria-sort={ariaSortFor('amount')}
                 >
-                  Amount
-                  <ArrowUpDown
-                    size={12}
-                    className={`sort-icon ${
-                      filters.sortBy === 'amount' ? 'active' : ''
-                    }`}
-                  />
+                  <button
+                    type="button"
+                    className="th-sort-btn right"
+                    onClick={() => toggleSort('amount')}
+                    aria-label="Sort transactions by amount"
+                  >
+                    Amount
+                    <ArrowUpDown
+                      size={12}
+                      className={`sort-icon ${
+                        filters.sortBy === 'amount' ? 'active' : ''
+                      }`}
+                    />
+                  </button>
                 </th>
                 {isAdmin ? <th className="right" scope="col">Actions</th> : null}
               </tr>

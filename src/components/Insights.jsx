@@ -12,6 +12,7 @@ import {
   savingsRate,
   spendingByCategory,
   monthKey,
+  analyzeFinanceInsights,
 } from '../utils/insights';
 import { formatCurrency } from '../utils/format';
 import { useApp } from '../context/AppContext';
@@ -33,6 +34,10 @@ export default function Insights() {
   const monthCmp = useMemo(() => monthlyComparison(transactions), [transactions]);
 
   const save = useMemo(() => savingsRate(transactions), [transactions]);
+  const smartPack = useMemo(
+    () => analyzeFinanceInsights(transactions),
+    [transactions]
+  );
 
   const topCats = useMemo(() => {
     const map = spendingByCategory(transactions, curKey);
@@ -142,6 +147,11 @@ export default function Insights() {
               {smart.trend === 'neutral' && <span className="trend flat" aria-hidden>→ </span>}
               {smart.message}
             </p>
+            {smartPack.warning ? (
+              <p className="insight-sub" style={{ marginTop: 8 }}>
+                {smartPack.warning}
+              </p>
+            ) : null}
           </div>
         </div>
       </div>
@@ -194,6 +204,10 @@ export default function Insights() {
           {save.rate >= 20
             ? '— solid buffer. Keep this rhythm if your goals allow.'
             : '— there is headroom to tighten discretionary spend or increase income.'}
+        </li>
+        <li>
+          <span className="obs-lead">📝 Summary</span>
+          {smartPack.summary}
         </li>
       </ul>
     </div>

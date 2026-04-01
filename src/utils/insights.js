@@ -160,3 +160,47 @@ export function totals(transactions) {
   }
   return { income, expense, balance: income - expense };
 }
+
+/**
+ * Reusable smart insight payload for dashboard/insight surfaces.
+ * Returns both machine-friendly values and a human-readable summary.
+ */
+export function analyzeFinanceInsights(transactions) {
+  const save = savingsRate(transactions);
+  const monthCmp = monthlyComparison(transactions);
+  const top = highestSpendingCategory(transactions, monthKey(new Date()));
+
+  const overspendByIncome = save.expenses > save.income && save.income > 0;
+  const overspendSpike = monthCmp.pctChange > 20;
+  const warning = overspendByIncome
+    ? 'Expenses are higher than income this month.'
+    : overspendSpike
+      ? 'Spending has spiked versus last month.'
+      : null;
+
+  const topCategory = top.category || 'No dominant category yet';
+  const direction =
+    monthCmp.pctChange > 1
+      ? 'up'
+      : monthCmp.pctChange < -1
+        ? 'down'
+        : 'flat';
+  const absPct = Math.abs(monthCmp.pctChange).toFixed(1);
+
+  const sentence1 = `Savings rate is ${save.rate.toFixed(1)}% this month.`;
+  const sentence2 =
+    direction === 'up'
+      ? `Spending is up ${absPct}% versus last month.`
+      : direction === 'down'
+        ? `Spending is down ${absPct}% versus last month.`
+        : 'Spending is nearly flat versus last month.';
+  const sentence3 = `Top spending category is ${topCategory}.`;
+
+  return {
+    savingsRate: save.rate,
+    topCategory,
+    warning,
+    monthOverMonthPct: monthCmp.pctChange,
+    summary: `${sentence1} ${sentence2} ${sentence3}`,
+  };
+}

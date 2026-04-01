@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { AppProvider, useApp } from './context/AppContext';
 import Sidebar from './components/Sidebar';
 import Dashboard from './components/Dashboard';
@@ -13,6 +13,10 @@ import './App.css';
 function AppShell() {
   const { state } = useApp();
   const { darkMode, activeTab } = state;
+
+  useEffect(() => {
+    document.title = 'FinBoard Dashboard';
+  }, []);
 
   const Page = {
     dashboard: Dashboard,

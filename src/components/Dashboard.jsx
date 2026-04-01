@@ -41,6 +41,17 @@ function ChartTooltip({ active, payload, label }) {
   );
 }
 
+function PieTooltip({ active, payload }) {
+  if (!active || !payload?.length) return null;
+  const item = payload[0];
+  return (
+    <div className="custom-tooltip">
+      <div className="tooltip-label">{item.name}</div>
+      <div className="tooltip-value mono">{formatCurrency(item.value)}</div>
+    </div>
+  );
+}
+
 export default function Dashboard() {
   const { state } = useApp();
   const { transactions, ui } = state;
@@ -140,7 +151,7 @@ export default function Dashboard() {
           ) : (
             <div className="chart-inner">
               <ResponsiveContainer width="100%" height={260}>
-                <AreaChart data={trend} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
+                <AreaChart data={trend} margin={{ top: 8, right: 14, left: 4, bottom: 0 }}>
                   <defs>
                     <linearGradient id="balFill" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="0%" stopColor="#6366f1" stopOpacity={0.35} />
@@ -168,6 +179,7 @@ export default function Dashboard() {
                     stroke="#6366f1"
                     strokeWidth={2}
                     fill="url(#balFill)"
+                    animationDuration={850}
                   />
                 </AreaChart>
               </ResponsiveContainer>
@@ -200,6 +212,8 @@ export default function Dashboard() {
                     innerRadius={58}
                     outerRadius={88}
                     paddingAngle={2}
+                    animationDuration={900}
+                    isAnimationActive
                   >
                     {pieData.map((entry) => (
                       <Cell
@@ -210,15 +224,7 @@ export default function Dashboard() {
                       />
                     ))}
                   </Pie>
-                  <Tooltip
-                    formatter={(v) => formatCurrency(v)}
-                    contentStyle={{
-                      background: 'var(--surface)',
-                      border: '1px solid var(--border)',
-                      borderRadius: 8,
-                      fontSize: 12,
-                    }}
-                  />
+                  <Tooltip content={<PieTooltip />} />
                 </PieChart>
               </ResponsiveContainer>
               <ul className="pie-legend">
