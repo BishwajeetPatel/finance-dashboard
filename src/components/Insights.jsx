@@ -69,8 +69,9 @@ export default function Insights() {
               <span className="insight-emoji" aria-hidden>
                 💰
               </span>
-              Top spending
+              Highest spending category
             </p>
+            <p className="insight-kicker">Largest expense bucket this month</p>
             <p className="insight-value">
               {high.category ? high.category : '—'}
             </p>
@@ -93,8 +94,9 @@ export default function Insights() {
               <span className="insight-emoji" aria-hidden>
                 📈
               </span>
-              Monthly comparison
+              This month vs last month
             </p>
+            <p className="insight-kicker">Total expenses compared to last month</p>
             <p className="insight-value insight-row">
               {monthCmp.pctChange > 0 ? (
                 <span className="trend-arrow trend-bad" title="Spending up vs last month">

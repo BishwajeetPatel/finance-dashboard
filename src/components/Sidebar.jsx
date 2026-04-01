@@ -5,10 +5,9 @@ import {
   Lightbulb,
   Moon,
   Sun,
-  Shield,
-  Eye,
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
+import RoleSelect from './RoleSelect';
 
 const NAV = [
   { id: 'dashboard', label: 'Overview', icon: LayoutDashboard },
@@ -18,7 +17,7 @@ const NAV = [
 
 export default function Sidebar() {
   const { state, dispatch } = useApp();
-  const { activeTab, darkMode, role } = state;
+  const { activeTab, darkMode } = state;
 
   return (
     <aside className="sidebar" aria-label="Main navigation">
@@ -57,25 +56,7 @@ export default function Sidebar() {
       </nav>
 
       <div className="sidebar-footer">
-        <p className="role-label">Role</p>
-        <div className="role-switch" role="group" aria-label="Switch role">
-          <button
-            type="button"
-            className={`role-switch-btn ${role === 'viewer' ? 'active' : ''}`}
-            onClick={() => dispatch({ type: 'SET_ROLE', payload: 'viewer' })}
-          >
-            <Eye size={14} aria-hidden />
-            Viewer
-          </button>
-          <button
-            type="button"
-            className={`role-switch-btn ${role === 'admin' ? 'active' : ''}`}
-            onClick={() => dispatch({ type: 'SET_ROLE', payload: 'admin' })}
-          >
-            <Shield size={14} aria-hidden />
-            Admin
-          </button>
-        </div>
+        <RoleSelect variant="sidebar" />
         <button
           type="button"
           className="theme-toggle"

@@ -63,7 +63,15 @@ function reducer(state, action) {
     case 'SET_LOADING':
       return { ...state, ui: { ...state.ui, loading: action.payload } };
     case 'SET_ROLE':
-      return { ...state, role: action.payload };
+      return {
+        ...state,
+        role: action.payload,
+        ui: {
+          ...state.ui,
+          modal: { open: false, mode: 'add', transaction: null },
+          confirmDeleteId: null,
+        },
+      };
     case 'SET_ACTIVE_TAB':
       return { ...state, activeTab: action.payload };
     case 'TOGGLE_DARK':

@@ -4,6 +4,7 @@ import {
   TrendingUp,
   TrendingDown,
   PiggyBank,
+  Eye,
 } from 'lucide-react';
 import {
   ResponsiveContainer,
@@ -53,7 +54,7 @@ function PieTooltip({ active, payload }) {
 }
 
 export default function Dashboard() {
-  const { state } = useApp();
+  const { state, isAdmin } = useApp();
   const { transactions, ui } = state;
 
   const curKey = monthKey(new Date());
@@ -105,6 +106,15 @@ export default function Dashboard() {
         <div>
           <h1 className="page-title">Overview</h1>
           <p className="page-sub">Balance, cash flow, and trends — at a glance.</p>
+          {!isAdmin ? (
+            <div className="viewer-notice" role="status">
+              <Eye size={18} aria-hidden />
+              <span>
+                <strong>Viewer mode</strong> — data is read-only. Switch to Admin in
+                the role menu to add or edit transactions.
+              </span>
+            </div>
+          ) : null}
         </div>
       </header>
 

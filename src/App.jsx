@@ -8,6 +8,7 @@ import TransactionModal from './components/TransactionModal';
 import ConfirmDialog from './components/ConfirmDialog';
 import ToastStack from './components/ToastStack';
 import Fab from './components/Fab';
+import RoleSelect from './components/RoleSelect';
 import './App.css';
 
 function AppShell() {
@@ -29,6 +30,9 @@ function AppShell() {
       <div className={`app-root ${darkMode ? 'dark' : ''}`}>
         <Sidebar />
         <main className="main-content">
+          <div className="mobile-role-bar">
+            <RoleSelect variant="bar" />
+          </div>
           <Page key={activeTab} />
         </main>
       </div>

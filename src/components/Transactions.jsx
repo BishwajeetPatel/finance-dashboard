@@ -1,5 +1,13 @@
 import React, { useMemo } from 'react';
-import { Search, Filter, Download, Pencil, Trash2, ArrowUpDown } from 'lucide-react';
+import {
+  Search,
+  Filter,
+  Download,
+  Pencil,
+  Trash2,
+  ArrowUpDown,
+  Eye,
+} from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { formatCurrency, formatDate } from '../utils/format';
 import { filterAndSort, uniqueCategories } from '../utils/selectors';
@@ -60,6 +68,15 @@ export default function Transactions() {
         <div>
           <h1 className="page-title">Transactions</h1>
           <p className="page-sub">Search, filter, and review all activity.</p>
+          {!isAdmin ? (
+            <div className="viewer-notice" role="status">
+              <Eye size={18} aria-hidden />
+              <span>
+                <strong>Viewer mode</strong> — you can search, filter, and export.
+                Add, edit, and delete are available only in Admin.
+              </span>
+            </div>
+          ) : null}
         </div>
         <div className="header-actions">
           <button
