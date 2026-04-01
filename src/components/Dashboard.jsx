@@ -81,6 +81,22 @@ export default function Dashboard() {
       .slice(0, 5);
   }, [transactions]);
 
+  const prevMonthNet = useMemo(() => {
+    const d = new Date();
+    d.setMonth(d.getMonth() - 1);
+    const pk = monthKey(d);
+    let inc = 0;
+    let exp = 0;
+    for (const t of transactions) {
+      if (monthKey(t.date) !== pk) continue;
+      if (t.type === 'income') inc += Number(t.amount);
+      else exp += Number(t.amount);
+    }
+    return inc - exp;
+  }, [transactions]);
+
+  const netTrendUp = balance >= prevMonthNet;
+
   if (ui.loading) return <DashboardSkeleton />;
 
   return (
@@ -91,6 +107,25 @@ export default function Dashboard() {
           <p className="page-sub">Balance, cash flow, and trends — at a glance.</p>
         </div>
       </header>
+
+      <section className="dashboard-hero" aria-label="Monthly snapshot">
+        <div className="dashboard-hero-copy">
+          <p className="dashboard-hero-label">This month</p>
+          <p className="dashboard-hero-title">Net cash flow</p>
+        </div>
+        <div className="dashboard-hero-metric">
+          <span
+            className={`dashboard-hero-trend ${netTrendUp ? 'up' : 'down'}`}
+            aria-hidden
+          >
+            {netTrendUp ? '↑' : '↓'}
+          </span>
+          <span className="dashboard-hero-value">{formatCurrency(balance)}</span>
+          <span className="dashboard-hero-vs">
+            vs {formatCurrency(prevMonthNet)} last month
+          </span>
+        </div>
+      </section>
 
       <div className="cards-grid">
         <div className="summary-card card-blue">
@@ -248,8 +283,17 @@ export default function Dashboard() {
 
       <section className="recent-section">
         <h2 className="section-title">Recent transactions</h2>
-        {recent.length === 0 ? (
-          <EmptyState title="No activity yet" description="Your latest five items will show up here." />
+        {transactions.length === 0 ? (
+          <EmptyState
+            variant="empty"
+            title="No activity yet"
+            description="Add transactions to see your latest items here."
+          />
+        ) : recent.length === 0 ? (
+          <EmptyState
+            title="No recent items"
+            description="Your five most recent transactions will appear here."
+          />
         ) : (
           <ul className="recent-list">
             {recent.map((t) => (

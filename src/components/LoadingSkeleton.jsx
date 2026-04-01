@@ -5,7 +5,11 @@ export function DashboardSkeleton() {
     <div className="page skeleton-page" aria-hidden>
       <div className="skeleton-line skeleton-title" />
       <div className="skeleton-line skeleton-sub" />
-      <div className="cards-grid" style={{ marginTop: 24 }}>
+      <div
+        className="skeleton-line skeleton-hero"
+        style={{ marginTop: 20, marginBottom: 4 }}
+      />
+      <div className="cards-grid" style={{ marginTop: 20 }}>
         {[1, 2, 3, 4].map((i) => (
           <div key={i} className="summary-card skeleton-card">
             <div className="skeleton-line skeleton-sm" />

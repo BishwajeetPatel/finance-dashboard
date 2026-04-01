@@ -1,6 +1,4 @@
-/**
- * Pure helpers for dashboard metrics — no React dependencies
- */
+
 
 export function monthKey(date) {
   const d = new Date(date);

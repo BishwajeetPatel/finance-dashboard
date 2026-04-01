@@ -157,7 +157,7 @@ export function AppProvider({ children }) {
 
     const timer = setTimeout(() => {
       dispatch({ type: 'SET_LOADING', payload: false });
-    }, 780);
+    }, 880);
 
     return () => clearTimeout(timer);
   }, []);

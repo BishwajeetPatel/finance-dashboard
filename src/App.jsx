@@ -29,7 +29,7 @@ function AppShell() {
       <div className={`app-root ${darkMode ? 'dark' : ''}`}>
         <Sidebar />
         <main className="main-content">
-          <Page />
+          <Page key={activeTab} />
         </main>
       </div>
       <Fab />

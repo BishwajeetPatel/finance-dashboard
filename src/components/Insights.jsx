@@ -74,8 +74,12 @@ export default function Insights() {
             <p className="insight-value">
               {high.category ? high.category : '—'}
             </p>
-            <p className="insight-sub">
-              {high.amount > 0 ? formatCurrency(high.amount) : 'No expense data'}
+            <p className="insight-sub insight-sub--metric">
+              {high.amount > 0 ? (
+                <span className="insight-figure">{formatCurrency(high.amount)}</span>
+              ) : (
+                'No expense data'
+              )}
             </p>
           </div>
         </div>
@@ -103,7 +107,9 @@ export default function Insights() {
               ) : (
                 <span className="trend-arrow trend-neutral">→</span>
               )}
-              {Math.abs(monthCmp.pctChange).toFixed(1)}%
+              <span className="insight-figure">
+                {Math.abs(monthCmp.pctChange).toFixed(1)}%
+              </span>
             </p>
             <p className="insight-sub">
               Spending vs last month ({formatCurrency(monthCmp.current)} vs{' '}
@@ -123,7 +129,7 @@ export default function Insights() {
               </span>
               Savings rate
             </p>
-            <p className="insight-value">{save.rate.toFixed(1)}%</p>
+            <p className="insight-value insight-figure">{save.rate.toFixed(1)}%</p>
             <p className="insight-sub">
               Of income kept after expenses this month
             </p>

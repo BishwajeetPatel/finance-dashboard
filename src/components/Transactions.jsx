@@ -19,6 +19,8 @@ export default function Transactions() {
 
   const categories = useMemo(() => uniqueCategories(transactions), [transactions]);
 
+  const hasNoTransactions = transactions.length === 0;
+
   function setFilter(patch) {
     dispatch({ type: 'SET_FILTERS', payload: patch });
   }
@@ -113,8 +115,15 @@ export default function Transactions() {
       </div>
 
       <div className="table-wrap">
-        {list.length === 0 ? (
+        {hasNoTransactions ? (
           <EmptyState
+            variant="empty"
+            title="No transactions yet"
+            description="Add income or expenses to see them listed here."
+          />
+        ) : list.length === 0 ? (
+          <EmptyState
+            variant="filter"
             title="No transactions match your filters"
             description="Try removing a filter or changing your search."
           />
