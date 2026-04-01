@@ -1,0 +1,21 @@
+/* Global reset — FinBoard (App.css owns theme tokens) */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100%;
+}
+
+#root {
+  width: 100%;
+  max-width: none;
+  text-align: initial;
+  border: none;
+  display: block;
+}
